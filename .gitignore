@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-spotifyKeys.js
+
 
 # dependencies
 /node_modules
@@ -14,11 +14,13 @@ spotifyKeys.js
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.eslintcache
 
 npm-debug.log*
 yarn-debug.log*
