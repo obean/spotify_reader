@@ -24,15 +24,29 @@ const hash = window.location.hash
     return initial;
   }, {});
 
+window.location.hash = "";
 
 function App() {
-  const [token, setToken] = useState(false)
-    useEffect(() => {
-        let _token = hash.access_token;
-        if(_token) {
-          setToken(_token)     
+  const [token, setToken] = useState(false);
+  const [nowPlaying, setNowPlaying] = useState(
+    { album: {
+         images: [{ url: ""}] 
+      },
+      name: "",
+      artists: [{ name: "" }],
+      duration_ms: 0
     }
+  )
+
+  useEffect(() => {
+      let _token = hash.access_token;
+      if(_token) {
+        setToken(_token)     
+      }
   })
+
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -43,9 +57,9 @@ function App() {
             href={`${authEndpoint}client_id=${process.env.REACT_APP_CLIENTID}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
           > Login to Spotify</a>  
         )}
-        {/* {token &&(
-        // player goes here
-        )} */}
+        {token &&(
+        <i> Logged in to Spotify</i>
+        )}
         <a
           className="App-link"
           href="https://reactjs.org"
