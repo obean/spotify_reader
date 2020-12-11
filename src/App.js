@@ -27,7 +27,7 @@ const hash = window.location.hash
 window.location.hash = "";
 
 function App() {
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState("");
   const [nowPlaying, setNowPlaying] = useState(
     { album: {
          images: [{ url: ""}] 
@@ -38,12 +38,34 @@ function App() {
     }
   )
 
+
+    //   const data = await fetch("https://api.spotify.com/v1/me/player", {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization':  "Bearer " + token
+    //     }
+    //   })
+
   useEffect(() => {
       let _token = hash.access_token;
+      console.log(hash.access_token)
       if(_token) {
-        setToken(_token)     
+        setToken(_token)
       }
-  })
+  },[])
+  useEffect(() => {
+    setNowPlaying(getCurrentlyPlaying())
+  }, [token])
+
+  const getCurrentlyPlaying =   async  () => {
+    const data = await fetch("https://api.spotify.com/v1/me/player", {
+      headers: {
+              'Content-Type': 'application/json',
+              'Authorization':  "Bearer " + "BQCnGhypFIEVxoTUw-2l-C5WOx-jj1vxHEh6MVtXUr4YqPYW5q4JwGLKrrlv3kIlTOiHiLJlGcfI0rWjz_q3CNB9aId2aNOivPeIVY8Da99u_xdIjziDeKHVPtW4zrQF0zIENLkxIDSbHnceLAdRrR8"
+            }
+    }).then(data => data.json())
+    return  setNowPlaying( data.item )
+  }
 
 
 
@@ -58,7 +80,10 @@ function App() {
           > Login to Spotify</a>  
         )}
         {token &&(
-        <i> Logged in to Spotify</i>
+          <div>
+            <h1>{token}</h1> 
+            <i> Logged in to Spotify</i>
+         </div>      
         )}
         <a
           className="App-link"
