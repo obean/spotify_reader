@@ -1,11 +1,13 @@
 import React, { useState, useEffect, Component } from "react";
 
 
-function ProgressBar(percentage) {
+function ProgressBar(props) {
 //const [styleWidth, setWidth] = useEffect('0%');
 
+
+
 return (
-  <div class="progress_bar" style={ {width: percentage + '%'} }/>
+  <div class="progress_bar" style={ {width: props.percentage + '%'} }/>
 )
 
 
