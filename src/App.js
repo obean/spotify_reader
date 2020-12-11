@@ -30,21 +30,13 @@ function App() {
   const [token, setToken] = useState();
   const [nowPlaying, setNowPlaying] = useState(
     { album: {
-         images: [{ url: ""}] 
+         images: [{ url: ""}, { url: "" }] 
       },
       name: "",
       artists: [{ name: "" }],
       duration_ms: 0
     }
   )
-
-
-    //   const data = await fetch("https://api.spotify.com/v1/me/player", {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization':  "Bearer " + token
-    //     }
-    //   })
 
   useEffect(() => {
       let _token = hash.access_token;
@@ -53,6 +45,7 @@ function App() {
         setToken(_token)
       }
   })
+
   useEffect(() => {
     if(token){
     const getCurrentlyPlaying =   async  () => {
@@ -69,7 +62,7 @@ function App() {
 
   useEffect(() => {
     console.log(nowPlaying)
-  }, [nowPlaying])
+  })
 
 
 
@@ -86,8 +79,10 @@ function App() {
           > Login to Spotify</a>  
         )}
         {token &&(
-          <div>
-            <h1>{token}</h1> 
+          <div name="now-playing">
+            <img src={nowPlaying.album.images[1].url}/>
+            <h1>{nowPlaying.name}</h1> 
+            <h2>{nowPlaying.artists[0].name}</h2>
             <i> Logged in to Spotify</i>
          </div>      
         )}
