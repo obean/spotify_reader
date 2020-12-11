@@ -26,9 +26,6 @@ const hash = window.location.hash
 
 window.location.hash = "";
 
-// const progressBarStyles = {
-//   width: (progress_ms * 100 / item.duration_ms) + '%'
-// };
 
 function App() {
   const [token, setToken] = useState();
@@ -40,7 +37,9 @@ function App() {
       artists: [{ name: "" }],
       duration_ms: 0
     }
-  )
+  );
+  const [is_playing, setIsPlaying] = useState();
+  const [progress_ms, setProgress_ms] = useState();
 
   useEffect(() => {
       let _token = hash.access_token;
@@ -60,7 +59,9 @@ function App() {
               }
       }).then(data => data.json())
       console.log(data)
-        setNowPlaying( data.item );//removed return 
+      setNowPlaying( data.item );//removed return 
+      setIsPlaying(data.is_playing);
+      setProgress_ms(data.progress_ms);
     }
     getCurrentlyPlaying();
   }}, [token])
@@ -69,21 +70,18 @@ function App() {
     console.log(nowPlaying)
   })
 
-   const convertTime = (ms) => {
+  const convertTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
-  
-
-
-
+  //const progressBarStyle = { width: ( progress_ms * 60 / nowPlaying.item.duration_ms) + '%' };
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         {!token && (
           <a
             className="btn btn--loginApp-link"
@@ -95,6 +93,8 @@ function App() {
             <img src={nowPlaying.album.images[1].url}/>
             <h1>{nowPlaying.name}</h1> 
             <h2>{nowPlaying.artists[0].name}</h2>
+            <p> progress_ms: {progress_ms}, isPlaying: {String(is_playing)}</p>
+            <div class="progress_bar" style={ {width: ( progress_ms * 60 / nowPlaying.duration_ms) + '%'} }/>
             <h3> {convertTime(nowPlaying.duration_ms)} </h3>
             <i> Logged in to Spotify</i>
          </div>      
