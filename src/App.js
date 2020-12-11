@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from "react";
 //import hash from "./hash";
 import logo from './logo.svg';
 import './App.css';
+import ProgressBar from './components/progressBar.component.js'
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize?'
 // const clientId = process.env.REACT_APP_CLIENTID;
@@ -70,6 +71,12 @@ function App() {
     console.log(nowPlaying)
   })
 
+  // useEffect(() => {
+  //   console.log(progress_ms)
+  //   let interval = setInterval(() => setProgress_ms(progress_ms - 1000), 1000 )
+    
+  // })
+
   const convertTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
@@ -94,7 +101,8 @@ function App() {
             <h1>{nowPlaying.name}</h1> 
             <h2>{nowPlaying.artists[0].name}</h2>
             <p> progress_ms: {progress_ms}, isPlaying: {String(is_playing)}</p>
-            <div class="progress_bar" style={ {width: ( progress_ms * 60 / nowPlaying.duration_ms) + '%'} }/>
+            {/* <ProgressBar { ...((progress_ms  / nowPlaying.duration_ms)*100)} /> */}
+            <div class="progress_bar" style={ {width: ( (progress_ms  / nowPlaying.duration_ms)*100 ) + '%'} }/>
             <h3> {convertTime(nowPlaying.duration_ms)} </h3>
             <i> Logged in to Spotify</i>
          </div>      
