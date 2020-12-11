@@ -4,8 +4,8 @@ import logo from './logo.svg';
 import './App.css';
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize?'
-const clientId = process.env.REACT_APP_CLIENTID;
-const clientSecret = process.env.REACT_APP_CLIENTSECRET;
+// const clientId = process.env.REACT_APP_CLIENTID;
+// const clientSecret = process.env.REACT_APP_CLIENTSECRET;
 const redirectUri = "http://localhost:3000";
 const scopes = [
   "user-read-currently-playing",
@@ -25,6 +25,10 @@ const hash = window.location.hash
   }, {});
 
 window.location.hash = "";
+
+// const progressBarStyles = {
+//   width: (progress_ms * 100 / item.duration_ms) + '%'
+// };
 
 function App() {
   const [token, setToken] = useState();
@@ -55,7 +59,8 @@ function App() {
                 'Authorization':  "Bearer " + token
               }
       }).then(data => data.json())
-      return  setNowPlaying( data.item );
+      console.log(data)
+        setNowPlaying( data.item );//removed return 
     }
     getCurrentlyPlaying();
   }}, [token])
@@ -64,6 +69,13 @@ function App() {
     console.log(nowPlaying)
   })
 
+   const convertTime = (ms) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
+
+  
 
 
 
@@ -83,6 +95,7 @@ function App() {
             <img src={nowPlaying.album.images[1].url}/>
             <h1>{nowPlaying.name}</h1> 
             <h2>{nowPlaying.artists[0].name}</h2>
+            <h3> {convertTime(nowPlaying.duration_ms)} </h3>
             <i> Logged in to Spotify</i>
          </div>      
         )}
