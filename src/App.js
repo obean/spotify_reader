@@ -5,14 +5,12 @@ import './App.css';
 import ProgressBar from './components/progressBar.component.js'
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize?'
-// const clientId = process.env.REACT_APP_CLIENTID;
-// const clientSecret = process.env.REACT_APP_CLIENTSECRET;
+
 const redirectUri = "http://localhost:3000";
 const scopes = [
   "user-read-currently-playing",
   "user-read-playback-state",
 ];
-
 
 const hash = window.location.hash
   .substring(1)
@@ -26,7 +24,6 @@ const hash = window.location.hash
   }, {});
 
 window.location.hash = "";
-
 
 function App() {
   const [token, setToken] = useState();
@@ -60,7 +57,7 @@ function App() {
               }
       }).then(data => data.json())
       console.log(data)
-      setNowPlaying( data.item );//removed return 
+      setNowPlaying( data.item );
       setIsPlaying(data.is_playing);
       setProgress_ms(data.progress_ms);
     }
@@ -71,24 +68,15 @@ function App() {
     console.log(nowPlaying)
   })
 
-  // useEffect(() => {
-  //   console.log(progress_ms)
-  //   let interval = setInterval(() => setProgress_ms(progress_ms - 1000), 1000 )
-    
-  // })
-
   const convertTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
-  //const progressBarStyle = { width: ( progress_ms * 60 / nowPlaying.item.duration_ms) + '%' };
-
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         {!token && (
           <a
             className="btn btn--loginApp-link"
@@ -109,14 +97,7 @@ function App() {
             <i> Logged in to Spotify</i>
          </div>      
         )}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+     
       </header>
     </div>
   );
