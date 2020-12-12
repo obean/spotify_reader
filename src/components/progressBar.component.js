@@ -20,7 +20,7 @@ const moveBar = () => {
       clearInterval(interval);
       props.setToken()
     }
-  ;}, 1000)
+  ;}, 600)
 }
 
 useEffect(() => {
