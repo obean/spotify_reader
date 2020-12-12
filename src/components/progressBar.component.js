@@ -10,11 +10,15 @@ const [progress_ms, setProgress] = useState();
 let interval = useRef();
 
 const moveBar = () => {
+  
   interval = setInterval(() => {
     const newProgress = progress_ms + 1000;
     if(newProgress < props.duration_ms) {
-      setProgress(newProgress)
-      clearInterval(interval.current)
+      setProgress(newProgress);
+      clearInterval(interval.current);
+    }else {
+      clearInterval(interval);
+      props.setToken()
     }
   ;}, 1000)
 }
@@ -26,12 +30,12 @@ useEffect(() => {
 useEffect(() => {
   moveBar();
   return () => {
-    clearInterval(interval)
+    clearInterval(interval);
   }
 }, [progress_ms])
 
 const progressBarWidthPercentage = () => {
- return ((progress_ms  / props.duration_ms)*100)
+ return ((progress_ms  / props.duration_ms)*100);
 }
 
 

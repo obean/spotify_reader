@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 //import hash from "./hash";
 import logo from './logo.svg';
 import './App.css';
@@ -97,13 +97,14 @@ function App() {
         )}
         {token &&(
           <div name="now-playing">
-            <img src={nowPlaying.album.images[1].url}/>
+            <img src={nowPlaying.album.images[1].url} />
             <h1>{nowPlaying.name}</h1> 
             <h2>{nowPlaying.artists[0].name}</h2>
             <ProgressBar 
                         progress_ms={progress_ms}
                         duration_ms={nowPlaying.duration_ms}
-                        percentage={((progress_ms  / nowPlaying.duration_ms)*100)} />
+                        percentage={((progress_ms  / nowPlaying.duration_ms)*100)}
+                        setToken={setToken} />
 
             <i> Logged in to Spotify</i>
          </div>      
