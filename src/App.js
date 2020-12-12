@@ -100,11 +100,11 @@ function App() {
             <img src={nowPlaying.album.images[1].url}/>
             <h1>{nowPlaying.name}</h1> 
             <h2>{nowPlaying.artists[0].name}</h2>
-            <p> progress_ms: {progress_ms}, isPlaying: {String(is_playing)}</p>
-            <p>{ typeof ( (progress_ms  / nowPlaying.duration_ms)*100 ) }</p>
-            <ProgressBar percentage={((progress_ms  / nowPlaying.duration_ms)*100)} />
-            <div class="progress_bar" style={ {width: ( (progress_ms  / nowPlaying.duration_ms)*100 ) + '%'} }/>
-            <h3> {convertTime(nowPlaying.duration_ms)} </h3>
+            <ProgressBar 
+                        progress_ms={progress_ms}
+                        duration_ms={nowPlaying.duration_ms}
+                        percentage={((progress_ms  / nowPlaying.duration_ms)*100)} />
+
             <i> Logged in to Spotify</i>
          </div>      
         )}
